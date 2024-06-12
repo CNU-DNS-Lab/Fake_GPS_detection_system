@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            margin: 40px;
+            text-align: center; /* 将所有文字居中 */
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+        .form-group label {
+            font-weight: 500;
+        }
+        .btn-primary {
+            background-color: #4285f4;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #357ae8;
+        }
+        .card {
+            margin: 10px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        .text-danger {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Results</h1>
+        <!-- 添加一个表单以发送 POST 请求 -->
+        <form action="/predict" method="post" class="mb-4">
+            <div class="form-group mb-3">
+                <label for="order_id">Order ID:</label>
+                <input type="text" class="form-control" id="order_id" name="order_id" placeholder="Enter Order ID here..." required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit for Prediction</button>
+        </form>
+
+        <!-- 显示预测结果 -->
+        {% if error %}
+            <p class="text-danger">{{ error }}</p>
+        {% elif predictions %}
+            <h2>Results for Order ID: {{ order_id }}</h2>
+            <div class="d-flex flex-wrap justify-content-center">
+            {% for prediction in predictions %}
+                <div class="card">
+                    <div class="card-body">
+                        {{ prediction }}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>No predictions to display.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
